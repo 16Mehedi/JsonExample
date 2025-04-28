@@ -3,32 +3,37 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace JsonUserExample
+class Program
 {
-    internal class Program
+    public class User
     {
-        static void Main(string[] args)
+        public string Name { get; set; }
+        public int Age { get; set; }
+        public string City { get; set; }
+    }
+
+    static void Main(string[] args)
+    {
+        string filePath = "user.json";
+
+        if (!File.Exists(filePath))
         {
-            string filePath = "user.json";
+            Console.WriteLine("JSON file not found.");
+            return;
+        }
 
-            if (File.Exists(filePath))
-            {
-                string jsonResponse = File.ReadAllText(filePath);
+        string jsonResponse = File.ReadAllText(filePath);
 
-                List<User> users = JsonConvert.DeserializeObject<List<User>>(jsonResponse);
+        // Deserialize to List<User>
+        List<User> users = JsonConvert.DeserializeObject<List<User>>(jsonResponse);
 
-                foreach (var user in users)
-                {
-                    Console.WriteLine($"Name: {user.Name}");
-                    Console.WriteLine($"Age: {user.Age}");
-                    Console.WriteLine($"City: {user.City}");
-                    Console.WriteLine(new string('-', 20));
-                }
-            }
-            else
-            {
-                Console.WriteLine("JSON file not found.");
-            }
+        // Loop through users and display info
+        foreach (var user in users)
+        {
+            Console.WriteLine($"Name: {user.Name}");
+            Console.WriteLine($"Age: {user.Age}");
+            Console.WriteLine($"City: {user.City}");
+            Console.WriteLine(new string('-', 20));
         }
     }
 }

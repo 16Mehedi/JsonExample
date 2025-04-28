@@ -8,5 +8,10 @@
         "Name": "Jane Smith",
         "Age": 25,
         "City": "Los Angeles"
+    },
+    {
+        "Name": "Bob Johnson",
+        "Age": 35,
+        "City": "Chicago"
     }
 ]
