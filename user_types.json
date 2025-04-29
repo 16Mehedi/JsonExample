@@ -1,0 +1,16 @@
+[
+    {
+        "Name": "Alice Admin",
+        "Age": 40,
+        "City": "Seattle",
+        "UserType": "Admin",
+        "AdminLevel": "Super"
+    },
+    {
+        "Name": "Charlie Regular",
+        "Age": 22,
+        "City": "Austin",
+        "UserType": "Regular",
+        "SubscriptionType": "Free"
+    }
+]

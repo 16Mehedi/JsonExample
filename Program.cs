@@ -1,20 +1,14 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
 
 class Program
 {
-    public class User
-    {
-        public string Name { get; set; }
-        public int Age { get; set; }
-        public string City { get; set; }
-    }
-
     static void Main(string[] args)
     {
-        string filePath = "user.json";
+        string filePath = "user_types.json";
 
         if (!File.Exists(filePath))
         {
@@ -24,16 +18,42 @@ class Program
 
         string jsonResponse = File.ReadAllText(filePath);
 
-        // Deserialize to List<User>
-        List<User> users = JsonConvert.DeserializeObject<List<User>>(jsonResponse);
+        JArray jsonArray = JArray.Parse(jsonResponse);
+        List<User> users = new List<User>();
 
-        // Loop through users and display info
+        foreach (var item in jsonArray)
+        {
+            string type = item["UserType"]?.ToString();
+
+            switch (type)
+            {
+                case "Admin":
+                    AdminUser admin = item.ToObject<AdminUser>();
+                    users.Add(admin);
+                    break;
+
+                case "Regular":
+                    RegularUser regular = item.ToObject<RegularUser>();
+                    users.Add(regular);
+                    break;
+            }
+        }
+
+        // Output
         foreach (var user in users)
         {
             Console.WriteLine($"Name: {user.Name}");
             Console.WriteLine($"Age: {user.Age}");
             Console.WriteLine($"City: {user.City}");
-            Console.WriteLine(new string('-', 20));
+            Console.WriteLine($"UserType: {user.UserType}");
+
+            if (user is AdminUser admin)
+                Console.WriteLine($"AdminLevel: {admin.AdminLevel}");
+
+            if (user is RegularUser regular)
+                Console.WriteLine($"SubscriptionType: {regular.SubscriptionType}");
+
+            Console.WriteLine(new string('-', 30));
         }
     }
 }
