@@ -1,0 +1,2 @@
+Task 4: No code changes. Logic from Task 3 reused.
+Output and deserialization loop confirmed.
